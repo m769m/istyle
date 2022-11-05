@@ -1,7 +1,3 @@
-.body-service .wrapper-service-catalog {
-  margin-bottom: 70px;
-}
-
 .service-page-title {
   font-size: 24px;
   width: 100%;
@@ -65,7 +61,6 @@
 .salon-page-main-header .salon-page-rating {
   height: 36px;
   align-items: center;
-  margin-left: auto;
 }
 
 .salon-page-main-header .stars-rating.flex.flex-start {
@@ -321,7 +316,6 @@
 }
 
 .service-reviews {
-  margin-bottom: 30px;
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -339,64 +333,6 @@
 
 .service-card-like-btn .button {
   height: 36px;
-}
-
-.slider-photos-reviews {
-  position: relative;
-  user-select: none;
-  touch-action: pan-y;
-
-  margin-bottom: 21px;
-}
-
-.slider-photos-reviews img {
-  pointer-events: none;
-}
-
-.slider-photos-list {
-  overflow: hidden;
-  max-width: 1116px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.slider-photos-list.grab {
-  cursor: grab;
-}
-
-.slider-photos-list.grabbing {
-  cursor: grabbing;
-}
-
-.slider-photos-track {
-  display: flex;
-  justify-content: flex-start;
-  gap: 20px;
-}
-
-.slider-photo-container {
-  width: 85px;
-  height: 85px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.prev, .next {
-  width: 24px;
-  height: 24px;
-  top: 50%;
-}
-
-.next {
-  right: 0;
-}
-
-.slider-photo {
-  width: 85px;
-  height: 85px;
-  border-radius: 6px;
 }
 
 @media (max-width: 1260px) {
@@ -442,28 +378,6 @@
 
   .salon-page-right {
     max-width: 900px;
-  }
-
-  .body-service .service-reviews {
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .slider-photos-list {
-    max-width: 856px;
-  }
-}
-
-@media (max-width: 1010px) {
-  .body-service .service-reviews {
-    max-width: 680px;
-  }
-
-  .slider-photos-list {
-    max-width: 556px;
   }
 }
 
@@ -603,10 +517,6 @@
     margin: 0;
   }
 
-  .count-reviews {
-    display: none;
-  }
-
   .salon-page-main-header .salon-page-rating > a {
     display: none;
   }
@@ -626,14 +536,6 @@
 }
 
 @media (max-width: 680px) {
-  .prev, .next {
-    display: none;
-  }
-
-  .slider-photos-reviews {
-    width: 339px;
-  }
-
   .body-service .service-page-block {
     order: 1;
   }
@@ -747,7 +649,7 @@
     margin-right: 20px;
     margin-bottom: 20px;
 
-    max-width: 320px;
+    max-width: 70%;
     min-width: 320px;
     width: 100%;
 
@@ -784,7 +686,7 @@
     order: 3;
 
     min-width: 320px;
-    max-width: 320px;
+    max-width: 70%;
     width: 100%;
 
     margin-left: auto;
@@ -819,23 +721,17 @@
     color: #383838;
   }
 
-  .body-service .service-reviews {
-    max-width: 320px;
-    width: 100%;
-    padding: 0;
-  }
-
-  .body-service .slider-reviews {
-    box-sizing: content-box;
+  .service-reviews {
+    padding-left: 0;
     padding-right: 0;
   }
 
   .reviews-header {
     min-width: 320px;
-    max-width: 320px;
+    max-width: 70%;
     width: 100%;
 
-    margin-left: 0;
+    margin-left: auto;
     margin-right: auto;
 
     justify-content: space-between;
@@ -869,7 +765,7 @@
     order: 3;
   }
 
-  .service-footer-left .service-page-price, .service-footer-left .service-page-time {
+  .service-page-price, .service-page-time {
     display: flex;
     height: 54px;
     width: 100%;

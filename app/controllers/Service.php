@@ -9,7 +9,6 @@ use App\System\Core\Controller;
 use Themes\Purple\Models\CatalogServiceModel;
 use Themes\Purple\Models\PageModel;
 use Themes\Purple\Models\PurpleModel;
-use Themes\Purple\Models\ReviewModel;
 
 use const App\ROOT\ABSPATH;
 use const App\ROOT\SYSTEM_MODE;

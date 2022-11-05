@@ -211,6 +211,7 @@ $database->set_tables(
         new Column('review_rating', 'rating'),
         new Column('review_object', 'favorite_type'),
         new Column('review_object_id', 'int'),
+        // new Column('review_type', 'review_type', ['default' => 'text']),    // text OR with_photo
         new Column('&_user.user_id'),
         new Column('$_status', true, ['default' => 'active']),
         new Column('$_date_add'),
@@ -294,71 +295,73 @@ $database->set_tables(
 
 );
 
-if(SYSTEM_MODE === 'development' and isset($_GET['db_view']) and $_GET['db_view'] === DB_SETUP_KEY) {
-    $CreateTablesQuery = new CreateTablesQuery($database);
-    $db->do($CreateTablesQuery->query, true);
-    dd($CreateTablesQuery);
-}
+// if(SYSTEM_MODE === 'development' and isset($_GET['db_view']) and $_GET['db_view'] === DB_SETUP_KEY) {
+//     $CreateTablesQuery = new CreateTablesQuery($database);
+//     $db->do($CreateTablesQuery->query, true);
+//     dd($CreateTablesQuery);
+// }
 
-if(SYSTEM_MODE === 'development' and isset($_GET['db_create']) and $_GET['db_create'] === DB_SETUP_KEY) {
-    $db->do('', true, true);
-    exit;
-}
+// if(SYSTEM_MODE === 'development' and isset($_GET['db_create']) and $_GET['db_create'] === DB_SETUP_KEY) {
+//     $db->do('', true, true);
+//     exit;
+// }
 
-if(SYSTEM_MODE === 'development' and isset($_GET['db']) and $_GET['db'] === DB_SETUP_KEY) {
-    $CreateTablesQuery = new CreateTablesQuery($database);
-    $db->do($CreateTablesQuery->query, true);
-    dump($CreateTablesQuery);
-    exit;
-}
+// if(SYSTEM_MODE === 'development' and isset($_GET['db']) and $_GET['db'] === DB_SETUP_KEY) {
+//     $CreateTablesQuery = new CreateTablesQuery($database);
+//     $db->do($CreateTablesQuery->query, true);
+//     dump($CreateTablesQuery);
+//     exit;
+// }
 
-if(SYSTEM_MODE === 'development' and $_GET['alter_user'] === DB_SETUP_KEY) {
-    $db->do("ALTER TABLE `user` ADD COLUMN user_gender VARCHAR(255) AFTER user_role");
-    $db->do("ALTER TABLE `user` ADD COLUMN user_birthday BIGINT(11) AFTER user_gender");
-    exit('ok');
-}
+// if(SYSTEM_MODE === 'development' and $_GET['alter'] === DB_SETUP_KEY) {
 
-if(SYSTEM_MODE === 'development' and isset($_GET['option']) and $_GET['option'] === DB_SETUP_KEY) {
-    option('frontpage_title', 'frontpage_title_key');
-    option('meta_description', 'Описание сайта');
-    option('meta_keywords', '');
-    option('default_language', 'EN');
-    option('site_currency', 'EUR');
-    option('facebook_icon', 'EUR');
-    option('youtube_icon', 'EUR');
-    option('linkedin_icon', 'EUR');
-    option('instagram_icon', 'EUR');
-    option('pinterest_icon', 'EUR');
-    option('review_max_photo_count', '15');
-    option('contact_phone', '+79992223232');
-    option('requisites', 'ООО iStyle. Адрес г.Москва, ул. Кораблестроителей, дом 32, офис 23');
-    // option('default_support_user', 1);
-    // option('confirm_login', 1);
-    // option('yoomoney_login', '840701');
-    // option('yoomoney_pass', 'test_4BA9B3Fq0ymmJcdClTrTLjt5DcIzZ2Yilu5MoIB9Xz0');
-    exit('success');
-}
+//     // $db->do("ALTER TABLE `user_service` DROP COLUMN time_unit");
+//     // $db->do("ALTER TABLE `user` ADD COLUMN user_gender VARCHAR(255) AFTER user_role");
+//     // $db->do("ALTER TABLE `user` ADD COLUMN user_birthday BIGINT(11) AFTER user_gender");
+//     exit('ok');
+// }
 
-if(SYSTEM_MODE === 'development' and isset($_GET['data']) and $_GET['data'] === DB_SETUP_KEY) {
+// if(SYSTEM_MODE === 'development' and isset($_GET['option']) and $_GET['option'] === DB_SETUP_KEY) {
+//     option('frontpage_title', 'frontpage_title_key');
+//     option('meta_description', 'Описание сайта');
+//     option('meta_keywords', '');
+//     option('default_language', 'EN');
+//     option('site_currency', 'EUR');
+//     option('facebook_icon', 'EUR');
+//     option('youtube_icon', 'EUR');
+//     option('linkedin_icon', 'EUR');
+//     option('instagram_icon', 'EUR');
+//     option('pinterest_icon', 'EUR');
+//     option('review_max_photo_count', '15');
+//     option('contact_phone', '+79992223232');
+//     option('requisites', 'ООО iStyle. Адрес г.Москва, ул. Кораблестроителей, дом 32, офис 23');
+//     // option('default_support_user', 1);
+//     // option('confirm_login', 1);
+//     // option('yoomoney_login', '840701');
+//     // option('yoomoney_pass', 'test_4BA9B3Fq0ymmJcdClTrTLjt5DcIzZ2Yilu5MoIB9Xz0');
+//     exit('success');
+// }
+
+// if(SYSTEM_MODE === 'development' and isset($_GET['data']) and $_GET['data'] === DB_SETUP_KEY) {
     
-    $db->insert('user', [
-        'first_name' => 'Admin',
-        'user_email' => ADMIN_EMAIL,
-        'user_pass' => md5(ADMIN_PASS),
-        'user_role' => 'admin',
-        'user_status' => 'active',
-        'language_id' => 1,
-        'user_date_add' => time()
-    ]);
-    $db->insert('payment_method', [
-        'payment_method_comission' => 5.0,
-        'payment_method_name' => 'Stripe',
-        'payment_method_slug' => 'stripe',
-        'payment_method_status' => 'test',
-        'min_topup_amount' => 100,
-        'max_topup_amount' => 1000000,
-        'payment_method_date_add' => time()
-    ]);
+//     $db->insert('user', [
+//         'first_name' => 'Admin',
+//         'user_email' => ADMIN_EMAIL,
+//         'user_pass' => md5(ADMIN_PASS),
+//         'user_role' => 'admin',
+//         'user_status' => 'active',
+//         'language_id' => 1,
+//         'user_date_add' => time()
+//     ]);
+//     $db->insert('payment_method', [
+//         'payment_method_comission' => 5.0,
+//         'payment_method_name' => 'Stripe',
+//         'payment_method_slug' => 'stripe',
+//         'payment_method_status' => 'test',
+//         'min_topup_amount' => 100,
+//         'max_topup_amount' => 1000000,
+//         'payment_method_date_add' => time()
+//     ]);
 
-    exit('success');
-}
+//     exit('success');
+// }

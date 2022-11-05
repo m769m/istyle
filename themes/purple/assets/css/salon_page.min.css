@@ -7,10 +7,6 @@
   margin-bottom: 18px;
 }
 
-.body-salon .slider-arrows {
-  display: none;
-}
-
 .salon-page-helper-block {
   height: 100%;
   max-height: 100%;
@@ -172,8 +168,6 @@
 
 .salon-reviews {
   margin-bottom: 30px;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
 .best-master-cards-salone {
@@ -204,25 +198,6 @@
 .relative-salons {
   max-width: 1280px;
   margin: 0 auto;
-}
-
-.slider-reviews-track {
-  width: 100%;
-  /* display: grid; */
-  gap: 10px;
-  /* grid-template-columns: repeat(auto-fill, 590px);
-  justify-content: space-between; */
-}
-
-
-.salon-reviews .salon-page-rating {
-  display: none;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
-.salon-reviews .salon-page-rating > a {
-  display: none;
 }
 
 @media (max-width: 1260px) {
@@ -286,16 +261,6 @@
   }
 
   .body-salon .salon-reviews {
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* .slider-reviews-track {
-    grid-template-columns: repeat(auto-fill, 470px);
-  } */
-
-  .body-salon .salon-reviews {
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -333,14 +298,6 @@
   .salon-page-services-list {
     justify-content: center;
   }
-
-  .body-salon .salon-reviews {
-    max-width: 680px;
-  }
-
-  /* .slider-reviews-track {
-    grid-template-columns: repeat(auto-fill, 640px);
-  } */
 }
 
 @media (max-width: 940px) {
@@ -459,67 +416,9 @@
     justify-content: space-between;
     width: 100%;
   }
-
-  .salon-reviews .salon-page-rating {
-    display: flex;
-    min-width: 320px;
-    max-width: 320px;
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  /* .reviews-list {
-    max-width: none;
-    grid-template-columns: repeat(auto-fill, 240px);
-    justify-content: center;
-  } */
-
-  .slider-reviews {
-    user-select: none;
-    touch-action: pan-y;
-    width: 339px;
-  }
-
-  .body-salon .salon-reviews {
-    box-sizing: content-box;
-    padding-right: 0;
-  }
-
-  .slider-reviews img {
-    pointer-events: none;
-  }
-  
-  .slider-reviews-list {
-    overflow: hidden;
-  }
-
-  .slider-reviews-list.grab {
-    cursor: grab;
-  }
-
-  .slider-reviews-list.grabbing {
-    cursor: grabbing;
-  }
-
-  .slider-reviews-track {
-    display: flex;
-  }
-
-  .slider-reviews {
-    padding-right: 0;
-  }
-
-  .slide-review .review-item-header {
-    width: 220px;
-  }
 }
 
 @media (max-width: 450px) {
-  .body-salon .salon-reviews {
-    max-width: 360px;
-  }
-
   .body-salon .worktime-information {
     padding-bottom: 18px;
   }

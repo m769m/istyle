@@ -10,9 +10,11 @@ use Themes\Purple\Models\PurpleModel;
 use Themes\Purple\Models\SalonCardModel;
 
 use function App\app;
+use function App\clear_input;
 use function App\db;
 use function App\get_text;
 use function App\getPagination;
+use function App\search_input;
 
 class Catalog extends Controller
 {
@@ -25,7 +27,9 @@ class Catalog extends Controller
 
     function main()
     {
-        $variables = [];
+        $variables = [
+            'is_service_catalog' => false
+        ];
         $variables['sellers'] = [];
 
         foreach (app()->categories as $category) {
@@ -33,8 +37,47 @@ class Catalog extends Controller
             $item['url'] = '/catalog/' . $category['service_category_slug'];
             $variables['categories'][] = $item;
         }
+     
+        $query = [
+            "status" => "user_status = 'active'",
+            "role" => "(user_role = 'salon' OR user_role = 'master')"
+        ];
+        $orderBy = "`recommended` DESC";
+        if(intval($_GET['filter']) === 1) {
+            $city = search_input($_GET['city']);
+            $street = search_input($_GET['street']);
+            $rating = intval($_GET['rating']);
+            $sort = $_GET['sort'];
+            $view = $_GET['view'];
 
-        $itemsCount = db()->find_one("SELECT COUNT(*) FROM user WHERE user_status = 'active' AND user_role = 'salon' OR user_status = 'active' AND user_role = 'master'");
+            if(!empty($sort) and !in_array($sort, ['recommended', 'user_rating']) or !empty($view) and !in_array($view, ['master', 'salon']) or $rating > 0 and $rating > 5) {
+                exit('data error');
+            }
+
+            if(!empty($view)) {
+                $query['role'] = "user_role = '$view'";
+            }
+
+            if(!empty($sort)) {
+                $orderBy = "`$sort` DESC";
+            }
+
+            if($rating > 0) {
+                $maxRating = $rating+0.5;
+                $query['rating'] = "(user_rating >= $rating AND user_rating <= $maxRating)";
+            }
+
+            if(!empty($city)) {
+                $query['adress'] = "contact_adress LIKE '%$city%'";
+                if(!empty($street)) {
+                    $query['adress'] = '('.$query['adress']." AND contact_adress LIKE '%$street%')";
+                }
+            }
+        }
+
+        $queryStr = implode(' AND ', $query);
+
+        $itemsCount = db()->find_one("SELECT COUNT(*) FROM user WHERE $queryStr");
         $itemsCount = $itemsCount['COUNT(*)'];
 
         $variables['pagination'] = $this->_getPagination($itemsCount);
@@ -45,7 +88,7 @@ class Catalog extends Controller
             return false;
         }
 
-        $sellers = db()->select("SELECT * FROM `user` WHERE user_status = 'active' AND user_role = 'salon' OR user_status = 'active' AND user_role = 'master' ORDER BY `recommended` LIMIT $limit OFFSET $offset");
+        $sellers = db()->select("SELECT * FROM `user` WHERE $queryStr ORDER BY $orderBy LIMIT $limit OFFSET $offset");
 
         foreach ($sellers as $seller) {
             $seller = new SalonCardModel($seller);
@@ -62,7 +105,9 @@ class Catalog extends Controller
 
     function category($category_slug)
     {
-        $variables = [];
+        $variables = [
+            'is_service_catalog' => true
+        ];
 
         $currentCategory = false;
         foreach (app()->categories as $category) {
@@ -89,6 +134,15 @@ class Catalog extends Controller
             $variables['categories'][] = $item;
         }
 
+        $query = [
+            "status" => "user.user_status = 'active'",
+            "service_status" => "user_service.user_service_status = 'active'",
+            "category" => "service_subcategory.service_category_id = $catId"
+        ];
+        $this->_getFiltersQuery($query, "user.`recommended` DESC");
+        $queryStr = $this->query_string;
+        $orderBy = $this->order_by;
+
         $itemsCount = db()->find_one(
             "SELECT COUNT(*) FROM `user_service`
             LEFT JOIN `service`
@@ -99,9 +153,8 @@ class Catalog extends Controller
             ON `service_subcategory`.service_category_id = `service_category`.service_category_id
             RIGHT JOIN `user`
             ON user_service.user_id = `user`.`user_id`
-            WHERE user.user_status = 'active'
-            AND user_service.user_service_status = 'active'
-            AND service_subcategory.service_category_id = $catId"
+            WHERE $queryStr
+            ORDER BY $orderBy"
         );
         $itemsCount = $itemsCount['COUNT(*)'];
 
@@ -145,10 +198,8 @@ class Catalog extends Controller
             ON `service_subcategory`.service_category_id = `service_category`.service_category_id
             RIGHT JOIN `user`
             ON user_service.user_id = `user`.`user_id`
-            WHERE user.user_status = 'active'
-            AND user_service.user_service_status = 'active'
-            AND service_subcategory.service_category_id = $catId
-            ORDER BY `user`.`recommended`
+            WHERE $queryStr
+            ORDER BY $orderBy
             LIMIT $limit
             OFFSET $offset"
         );
@@ -186,7 +237,9 @@ class Catalog extends Controller
 
     function subcategory($category_slug, $subcategory_slug)
     {
-        $variables = [];
+        $variables = [
+            'is_service_catalog' => true
+        ];
 
         $currentCategory = false;
         foreach (app()->categories as $category) {
@@ -229,6 +282,16 @@ class Catalog extends Controller
             $variables['categories'][] = $item;
         }
 
+        
+        $query = [
+            "status" => "user.user_status = 'active'",
+            "service_status" => "user_service.user_service_status = 'active'",
+            "category" => "service.service_subcategory_id = $subcatId"
+        ];
+        $this->_getFiltersQuery($query, "user.`recommended` DESC");
+        $queryStr = $this->query_string;
+        $orderBy = $this->order_by;
+
         $itemsCount = db()->find_one(
             "SELECT COUNT(*) FROM `user_service`
             LEFT JOIN `service`
@@ -239,9 +302,7 @@ class Catalog extends Controller
             ON `service_subcategory`.service_category_id = `service_category`.service_category_id
             RIGHT JOIN `user`
             ON user_service.user_id = `user`.`user_id`
-            WHERE user.user_status = 'active'
-            AND user_service.user_service_status = 'active'
-            AND `service`.service_subcategory_id = $subcatId"
+            WHERE $queryStr"
         );
         $itemsCount = $itemsCount['COUNT(*)'];
 
@@ -285,10 +346,8 @@ class Catalog extends Controller
             ON `service_subcategory`.service_category_id = `service_category`.service_category_id
             RIGHT JOIN `user`
             ON user_service.user_id = `user`.`user_id`
-            WHERE user.user_status = 'active'
-            AND user_service.user_service_status = 'active'
-            AND `service`.service_subcategory_id = $subcatId
-            ORDER BY `user`.`recommended`
+            WHERE $queryStr
+            ORDER BY $orderBy
             LIMIT $limit
             OFFSET $offset"
         );
@@ -329,10 +388,11 @@ class Catalog extends Controller
         $this->model->load();
     }
 
-
     function tag($category_slug, $subcategory_slug, $tag_slug)
     {
-        $variables = [];
+        $variables = [
+            'is_service_catalog' => true
+        ];
 
         $currentCategory = false;
         foreach (app()->categories as $category) {
@@ -384,6 +444,15 @@ class Catalog extends Controller
         $tagSlug = $currentTag['service_slug'];
         $tagId = $currentTag['service_id'];
 
+        $query = [
+            "status" => "user.user_status = 'active'",
+            "service_status" => "user_service.user_service_status = 'active'",
+            "category" => "service.service_id = $tagId"
+        ];
+        $this->_getFiltersQuery($query, "user.`recommended` DESC");
+        $queryStr = $this->query_string;
+        $orderBy = $this->order_by;
+
         $itemsCount = db()->find_one(
             "SELECT COUNT(*) FROM `user_service`
             LEFT JOIN `service`
@@ -394,9 +463,7 @@ class Catalog extends Controller
             ON `service_subcategory`.service_category_id = `service_category`.service_category_id
             RIGHT JOIN `user`
             ON user_service.user_id = `user`.`user_id`
-            WHERE user.user_status = 'active'
-            AND user_service.user_service_status = 'active'
-            AND `service`.service_id = $tagId"
+            WHERE $queryStr"
         );
         $itemsCount = $itemsCount['COUNT(*)'];
 
@@ -440,10 +507,8 @@ class Catalog extends Controller
             ON `service_subcategory`.service_category_id = `service_category`.service_category_id
             RIGHT JOIN `user`
             ON user_service.user_id = `user`.`user_id`
-            WHERE user.user_status = 'active'
-            AND user_service.user_service_status = 'active'
-            AND `service`.service_id = $tagId
-            ORDER BY `user`.`recommended`
+            WHERE $queryStr
+            ORDER BY $orderBy
             LIMIT $limit
             OFFSET $offset"
         );
@@ -487,6 +552,102 @@ class Catalog extends Controller
 
         $this->model = new PageModel($tagTitle . ' / ' . $subcategoryTitle . ' / ' . $categoryTitle . ' / ' . get_text('service_catalog'), new PurpleModel('content/catalog', $variables), get_text('service_catalog'), $breadcrumbs, '', 'default-page-wrapper', "/catalog/$categorySlug/$subcategorySlug", $titleBread);
         $this->model->load();
+    }
+    
+    private function _getFiltersQuery(array $defaultQuery, string $defaultOrderBy)
+    {
+        $query = $defaultQuery;
+        $orderBy = $defaultOrderBy;
+        if(intval($_GET['filter']) === 1) {
+            $city = search_input($_GET['city']);
+            $street = search_input($_GET['street']);
+            $rating = intval($_GET['rating']);
+            $discounts = intval($_GET['discounts']);
+            $sort = $_GET['sort'];
+            $view = $_GET['view'];
+
+            $price_from = floatval($_GET['price_from']);
+            $price_to = floatval($_GET['price_to']);
+            $service_duration = intval($_GET['service_duration']);
+
+            $date_range = $_GET['date_range'];
+            $time_from = intval($_GET['time_from']);
+            $time_to = intval($_GET['time_to']);
+
+            if(!empty($sort) and !in_array($sort, ['recommended', 'user_rating', 'price', 'discount', 'duration']) or !empty($view) and !in_array($view, ['master', 'salon']) or $rating > 0 and $rating > 5 or $service_duration > 0 and $service_duration > 4) {
+                exit('data error');
+            }
+
+            if(!empty($sort)) {
+                
+                if($sort === 'recommended') {
+                    $sort = 'user.recommended DESC';
+                } else if($sort === 'user_rating') {
+                    $sort = 'user_service.user_service_rating DESC';
+                } else if($sort === 'price') {
+                    $sort = 'user_service.user_service_price ASC';
+                } else if($sort === 'discount') {
+                    $sort = 'user_service.user_service_discount DESC';
+                } else if($sort === 'duration') {
+                    $sort = 'user_service.user_service_time ASC';
+                }
+                $orderBy = $sort;
+            }
+
+            
+            $price = [];
+            if($price_from > 0) {
+                $price[] = "user_service.user_service_price >= $price_from";
+            }
+            if($price_to > 0 and $price_to > $price_from) {
+                $price[] = "user_service.user_service_price <= $price_to";
+            }
+            if(!empty($price)) {
+                $query['price'] = implode(" AND ", $price);
+            }
+
+            if($service_duration > 0) {
+                switch ($service_duration) {
+                    case 1:
+                        $query['duration'] = "user_service.user_service_time <= 45";
+                        break;
+                    case 2:
+                        $query['duration'] = "(user_service.user_service_time >= 45 AND user_service.user_service_time < 115)";
+                        break;
+                    case 3:
+                        $query['duration'] = "(user_service.user_service_time >= 115 AND user_service.user_service_time < 180)";
+                        break;
+                    case 4:
+                        $query['duration'] = "user_service.user_service_time >= 180";
+                        break;
+                }
+            }
+
+            if($discounts !== 0) {
+                $time = time();
+                $query['discounts'] = "user_service.user_service_discount_expire > $time";
+            }
+
+            if(!empty($view)) {
+                $query['role'] = "user.user_role = '$view'";
+            }
+
+            if($rating > 0) {
+                $maxRating = $rating+0.5;
+                $query['rating'] = "(user_service.user_service_rating >= $rating AND user_service.user_service_rating <= $maxRating)";
+            }
+
+            if(!empty($city)) {
+                $query['adress'] = "user.contact_adress LIKE '%$city%'";
+                if(!empty($street)) {
+                    $query['adress'] = '('.$query['adress']." AND user.contact_adress LIKE '%$street%')";
+                }
+            }
+        }
+        $queryStr = implode(' AND ', $query);
+        $this->query_string = $queryStr;
+        $this->order_by = $orderBy;
+
     }
 
     private function _getPagination(int $count): array

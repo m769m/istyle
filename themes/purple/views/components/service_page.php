@@ -26,9 +26,9 @@
             <p class="salon-page-rating-title-mini">Отзывы об услуге</p>
             <?= getStars($rating) ?>
             <?php if ($reviews_count > 0) { ?>
-                <a class="count-reviews" href='#reviews'>(<?= $reviews_count ?> <?= t('reviews') ?>)</a>
+                <a href='#reviews'>(<?= $reviews_count ?> <?= t('reviews') ?>)</a>
             <?php } else { ?>
-                <span class="count-reviews">(<?= t('no_reviews') ?>)</span>
+                <span>(<?= t('no_reviews') ?>)</span>
             <?php } ?>
         </div>
     </div>
@@ -117,11 +117,11 @@
             <h3 class="filter-reviews-title"><?= t('service_reviews') ?></h3>
             <div class="filter-reviews-checkbox">
                 <label class="checkbox-block">
-                    <input type="checkbox" name="" id="">
+                    <input type="radio" class="radio-filter-js" name="service_review" value="with_photo" id="">
                     <?= t('with_photo') ?>
                 </label>
                 <label class="checkbox-block">
-                    <input type="checkbox" name="" id="">
+                    <input type="radio" class="radio-filter-js" name="service_review" value="text_only" id="">
                     <?= t('text_only') ?>
                 </label>
             </div>
@@ -130,42 +130,17 @@
             <a class="button primary-transparent-button bold padding15 icon-button review-button-js"><?= t('add_review') ?><img src="/themes/purple/assets/images/feather.svg"></a>
         </div>
     </div>
-
-    <?php if (!empty($slider_photos)) { ?>
-
-        <div class="slider-photos-reviews">
-            <div class="photos-list slider-photos-list">
-                <div class="slider-photos-track">
-
-                    <?php foreach ($slider_photos as $slider_photo) { ?>
-
-                        <div class="slider-photo-container">
-                            <img class="slider-photo" src=" <?= $slider_photo ?>" alt="">
-                        </div>
-
-                    <?php } ?>
-                </div>
-            </div>
-
-            <div class="prev works-slider-button works-button"><i class="fa-solid fa-chevron-left"></i></div>
-            <div class="next works-slider-button works-button"><i class="fa-solid fa-chevron-right"></i></div>
-        </div>
-
-    <?php } ?>
-
-    <div class="slider-reviews">
-        <div class="reviews-list slider-reviews-list">
-            <div class="slider-reviews-track">
-                <?php if (!empty($reviews)) {
-                    foreach ($reviews as $review) {
-                        echo $review;
-                    }
-                } else {
-                    echo '</div><p class="catalog-no-results">' . t('no_reviews') . '</p>';
-                } ?>
-            </div>
-        </div>
+    <div class="reviews-box" id="filters_content_js">
+        <?php if (isset($reviews) and !empty($reviews)) {
+        } else {
+            echo '</div><p class="catalog-no-results">' . t('no_reviews') . '</p>';
+        } ?>
     </div>
 </div>
 <?= $review_topup ?>
+<form action="" method="post" class="filters-form-js">
+    <input type="hidden" name="filter" value="1">
+    <input type="hidden" name="service_review">
+</form>
+<script src="/assets/js/filters.js"></script>
 <!-- service_page -->

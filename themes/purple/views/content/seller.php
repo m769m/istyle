@@ -1,3 +1,3 @@
 <!-- seller -->
-<?= $seller ?>
+<?=$seller?>
 <!-- seller -->

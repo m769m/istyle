@@ -8,7 +8,6 @@ use Themes\Purple\Models\CatalogServiceModel;
 use Themes\Purple\Models\FaqQuestionModel;
 use Themes\Purple\Models\PageModel;
 use Themes\Purple\Models\PurpleModel;
-use Themes\Purple\Models\ReviewModel;
 use Themes\Purple\Models\SalonCardModel;
 
 use const App\ROOT\SYSTEM_MODE;

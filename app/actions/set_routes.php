@@ -15,6 +15,18 @@ $app->url('/profile/settings', 'App\Controllers\UserProfile->settings');
 $app->url('/profile/favorites', 'App\Controllers\UserProfile->favorites');
 $app->url('/profile/reviews', 'App\Controllers\UserProfile->reviews');
 
+$app->url('/salon/contacts', 'App\Controllers\SalonProfile->contacts');
+$app->url('/salon/services', 'App\Controllers\SalonProfile->services');
+$app->url('/salon/payments', 'App\Controllers\SalonProfile->payments');
+$app->url('/salon/personal', 'App\Controllers\SalonProfile->personal');
+$app->url('/salon/personal/{user_id}', 'App\Controllers\SalonProfile->employee');
+$app->url('/salon/clients', 'App\Controllers\SalonProfile->clients');
+$app->url('/salon/clients/{user_id}', 'App\Controllers\SalonProfile->client');
+$app->url('/salon/reviews', 'App\Controllers\SalonProfile->reviews');
+$app->url('/salon/stats', 'App\Controllers\SalonProfile->stats');
+$app->url('/salon/promotion', 'App\Controllers\SalonProfile->promotion');
+$app->url('/clients/blacklist', 'App\Controllers\SalonProfile->blacklist');
+
 $app->url('/faq', 'App\Controllers\Pages->faq');
 $app->url('/contacts', 'App\Controllers\Pages->contacts');
 $app->url('/about', 'App\Controllers\Pages->about');

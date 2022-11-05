@@ -44,4 +44,7 @@
 <?php if (isset($additional_content) and $additional_content !== false) {
   echo $additional_content;
 } ?>
+<div class="footer-line">
+  <img src="/themes/purple/assets/images/flower-footer.png" alt="цветок">
+</div>
 <!-- page -->

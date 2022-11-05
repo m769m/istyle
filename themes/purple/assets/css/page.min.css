@@ -1,4 +1,6 @@
-
+.main-wrapper .footer-line {
+  display: none;
+}
 
 .body.default-page-wrapper .main-footer .footer-line, .body.page-about .main-footer .footer-line {
   display: block;

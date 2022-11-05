@@ -19,25 +19,25 @@ class SalonCardModel extends PurpleModel
         $variables = [];
         $variables['type'] = $salon['user_role'];
         $variables['url'] = "/sellers/$salon_id";
-        if ($salon['user_role'] === 'salon') {
+        if($salon['user_role'] === 'salon') {
             $variables['name'] = $salon['salon_name'];
-        } else if ($salon['user_role'] === 'master') {
-            $variables['name'] = $salon['first_name'] . ' ' . $salon['last_name'];
+        } else if($salon['user_role'] === 'master') {
+            $variables['name'] = $salon['first_name'].' '.$salon['last_name'];
         }
 
         $variables['in_favorites'] = '';
         $variables['in_favorites_icon'] = 'fa-regular';
-        if ($isSalonPage === true) {
-            $variables['in_favorites_text'] = 'add_' . $variables['type'] . '_to_wishlist';
+        if($isSalonPage === true) {
+            $variables['in_favorites_text'] = 'add_'.$variables['type'].'_to_wishlist';
         }
-        if (is_logged_in() and user()->user_role === 'customer') {
-            if (!empty(user()->favorites)) {
-                foreach (user()->favorites as $favoriteItem) {
-                    if ($favoriteItem['user_favorite_type'] === 'seller' and $favoriteItem['object_id'] === $salon_id) {
+        if(is_logged_in() and user()->user_role === 'customer') {
+            if(!empty(user()->favorites)) {
+                foreach(user()->favorites as $favoriteItem) {
+                    if($favoriteItem['user_favorite_type'] === 'seller' and $favoriteItem['object_id'] === $salon_id) {
                         $variables['in_favorites'] = 'active';
                         $variables['in_favorites_icon'] = 'fa-solid';
-                        if ($isSalonPage === true) {
-                            $variables['in_favorites_text'] = 'remove_' . $variables['type'] . '_from_wishlist';
+                        if($isSalonPage === true) {
+                            $variables['in_favorites_text'] = 'remove_'.$variables['type'].'_from_wishlist';
                         }
                         break;
                     }
@@ -48,9 +48,8 @@ class SalonCardModel extends PurpleModel
         $variables['logo'] = getUserAvatar(strval($salon['user_avatar']), $variables['name']);
         $variables['adress'] = $salon['contact_adress'];
         $variables['rating'] = floatval($salon['user_rating']);
-
         $images = db()->find('user_photo', ['user_id' => $salon_id, 'user_photo_status' => 'active']);
-        foreach ($images as $image) {
+        foreach($images as $image) {
             $variables['images'][] = $image['photo_path'];
         }
 
@@ -73,42 +72,14 @@ class SalonCardModel extends PurpleModel
             AND user_service.user_service_status = 'active'"
         );
 
-        $reviews = db()->select(
-            "SELECT *
-            FROM `review`
-            WHERE review_object_id = $salon_id
-            AND review_status = 'active'
-            ORDER BY `review_date_add` DESC"
-        );
-
-        $variables['reviews'] = $reviews;
-
-        foreach ($reviews as $key => $review) {
-            $userId = $review['user_id'];
-            $reviewUser = db()->select(
-                "SELECT 
-                `first_name`,
-                `last_name`
-                FROM `user`
-                WHERE `user_id` = $userId"
-            );
-
-            $review['first_name'] = $reviewUser[0]['first_name'];
-            $review['last_name'] = $reviewUser[0]['last_name'];
-
-            $reviews[$key] = new ReviewModel($review);
-        }
-
-        $variables['reviews'] = $reviews;
-
         $variables['services'] = [];
-        foreach ($services as $service) {
-            $variables['all_services'][$service['service_id']]['url'] = '?service=' . $service['service_slug'];
+        foreach($services as $service) {
+            $variables['all_services'][$service['service_id']]['url'] = '?service='.$service['service_slug'];
             $variables['all_services'][$service['service_id']]['name'] = get_text($service['lang_key'], $service['service_name']);
-            if (count($variables['services']) >= 6) {
+            if(count($variables['services']) >= 6) {
                 continue;
             }
-            $variables['services'][$service['service_id']]['url'] = '/catalog/' . $service['service_category_slug'] . '/' . $service['service_subcategory_slug'] . '/' . $service['service_slug'];
+            $variables['services'][$service['service_id']]['url'] = '/catalog/'.$service['service_category_slug'].'/'.$service['service_subcategory_slug'].'/'.$service['service_slug'];
             $variables['services'][$service['service_id']]['name'] = get_text($service['lang_key'], $service['service_name']);
         }
         $servicePrices = db()->select(
@@ -118,11 +89,11 @@ class SalonCardModel extends PurpleModel
             ORDER BY user_service.user_service_price ASC"
         );
         $variables['real_price'] = 0;
-        if (!empty($servicePrices)) {
+        if(!empty($servicePrices)) {
             $min = $servicePrices[0]['user_service_price'];
             $max = $servicePrices[array_key_last($servicePrices)]['user_service_price'];
             $variables['min_price'] = getPrice($min);
-            if ($min !== $max) {
+            if($min !== $max) {
                 $variables['max_price'] = getPrice($max);
             } else {
                 $variables['max_price'] = false;
@@ -135,7 +106,7 @@ class SalonCardModel extends PurpleModel
 
         $variables['id'] = $salon_id;
         $variables['more_services'] = 0;
-        if (!empty($servicePrices)) {
+        if(!empty($servicePrices)) {
             $variables['more_services'] = count($servicePrices);
         }
 
@@ -145,13 +116,33 @@ class SalonCardModel extends PurpleModel
             AND review.review_object = 'seller'
             AND review.review_status = 'active'"
         );
-        if (!empty($variables['reviews_count']) and is_array($variables['reviews_count'])) {
+        if(!empty($variables['reviews_count']) and is_array($variables['reviews_count'])) {
             $variables['reviews_count'] = count($variables['reviews_count']);
         } else {
             $variables['reviews_count'] = 0;
         }
 
-        if ($isSalonPage === true) {
+        if($isSalonPage === true) {
+
+            $orderBy = "user_service.user_service_rating DESC";
+            if(intval($_GET['filter']) === 1 and !empty($_GET['sort'])) {
+                $sort = $_GET['sort'];
+                if(!in_array($sort, ['user_service_rating', 'price', 'discount', 'duration'])) {
+                    exit('data error');
+                }
+                if($sort === 'recommended') {
+                    $sort = 'user.recommended DESC';
+                } else if($sort === 'user_rating') {
+                    $sort = 'user_service.user_service_rating DESC';
+                } else if($sort === 'price') {
+                    $sort = 'user_service.user_service_price ASC';
+                } else if($sort === 'discount') {
+                    $sort = 'user_service.user_service_discount DESC';
+                } else if($sort === 'duration') {
+                    $sort = 'user_service.user_service_time ASC';
+                }
+                $orderBy = $sort;
+            }
 
             $salonServices = db()->select(
                 "SELECT
@@ -182,24 +173,25 @@ class SalonCardModel extends PurpleModel
                 ON user_service.user_id = `user`.`user_id`
                 WHERE user.user_status = 'active'
                 AND user_service.user_service_status = 'active'
-                AND `user`.`user_id` = $salon_id"
+                AND `user`.`user_id` = $salon_id
+                ORDER BY $orderBy"
             );
 
             $variables['salon_services'] = [];
             $variables['additional_services'] = [];
-            if (!empty($salonServices)) {
+            if(!empty($salonServices)) {
                 $objectServices = [];
-                foreach ($salonServices as $salonService) {
+                foreach($salonServices as $salonService) {
                     $objectServices[] = new CatalogServiceModel($salonService, false, 'components/salon_page_service_card', false);
                 }
-                if (count($objectServices) > 7) {
+                if(count($objectServices) > 7) {
                     $variables['salon_services'] = array_slice($objectServices, 0, 7);
                     $variables['additional_services'] = array_slice($objectServices, 6);
                 } else {
                     $variables['salon_services'] = $objectServices;
                 }
             }
-
+            
             $dayOff = get_text('day_off');
             $variables['worktime'] = [
                 'monday' => $dayOff,
@@ -210,54 +202,54 @@ class SalonCardModel extends PurpleModel
                 'saturday' => $dayOff,
                 'sunday' => $dayOff
             ];
-            if ($salon['mon_worktime'] !== '' and $salon['mon_worktime'] !== null) {
+            if($salon['mon_worktime'] !== '' and $salon['mon_worktime'] !== null) {
                 $variables['worktime']['monday'] = str_replace(' ', '', $salon['mon_worktime']);
             }
-            if ($salon['tue_worktime'] !== '' and $salon['tue_worktime'] !== null) {
+            if($salon['tue_worktime'] !== '' and $salon['tue_worktime'] !== null) {
                 $variables['worktime']['tuesday'] = str_replace(' ', '', $salon['tue_worktime']);
             }
-            if ($salon['wed_worktime'] !== '' and $salon['wed_worktime'] !== null) {
+            if($salon['wed_worktime'] !== '' and $salon['wed_worktime'] !== null) {
                 $variables['worktime']['wednesday'] = str_replace(' ', '', $salon['wed_worktime']);
             }
-            if ($salon['thu_worktime'] !== '' and $salon['thu_worktime'] !== null) {
+            if($salon['thu_worktime'] !== '' and $salon['thu_worktime'] !== null) {
                 $variables['worktime']['thursday'] = str_replace(' ', '', $salon['thu_worktime']);
             }
-            if ($salon['fri_worktime'] !== '' and $salon['fri_worktime'] !== null) {
+            if($salon['fri_worktime'] !== '' and $salon['fri_worktime'] !== null) {
                 $variables['worktime']['friday'] = str_replace(' ', '', $salon['fri_worktime']);
             }
-            if ($salon['sat_worktime'] !== '' and $salon['sat_worktime'] !== null) {
+            if($salon['sat_worktime'] !== '' and $salon['sat_worktime'] !== null) {
                 $variables['worktime']['saturday'] = str_replace(' ', '', $salon['sat_worktime']);
             }
-            if ($salon['sun_worktime'] !== '' and $salon['sun_worktime'] !== null) {
+            if($salon['sun_worktime'] !== '' and $salon['sun_worktime'] !== null) {
                 $variables['worktime']['sunday'] = str_replace(' ', '', $salon['sun_worktime']);
             }
 
             $variables['social'] = [];
-            if ($salon['facebook_link'] !== '' and $salon['facebook_link'] !== null) {
+            if($salon['facebook_link'] !== '' and $salon['facebook_link'] !== null) {
                 $variables['social'][] = [
                     'link' => $salon['facebook_link'],
                     'icon' => option('facebook_icon')
                 ];
             }
-            if ($salon['youtube_link'] !== '' and $salon['youtube_link'] !== null) {
+            if($salon['youtube_link'] !== '' and $salon['youtube_link'] !== null) {
                 $variables['social'][] = [
                     'link' => $salon['youtube_link'],
                     'icon' => option('youtube_icon')
                 ];
             }
-            if ($salon['linkedin_link'] !== '' and $salon['linkedin_link'] !== null) {
+            if($salon['linkedin_link'] !== '' and $salon['linkedin_link'] !== null) {
                 $variables['social'][] = [
                     'link' => $salon['linkedin_link'],
                     'icon' => option('linkedin_icon')
                 ];
             }
-            if ($salon['instagram_link'] !== '' and $salon['instagram_link'] !== null) {
+            if($salon['instagram_link'] !== '' and $salon['instagram_link'] !== null) {
                 $variables['social'][] = [
                     'link' => $salon['instagram_link'],
                     'icon' => option('instagram_icon')
                 ];
             }
-            if ($salon['pinterest_link'] !== '' and $salon['pinterest_link'] !== null) {
+            if($salon['pinterest_link'] !== '' and $salon['pinterest_link'] !== null) {
                 $variables['social'][] = [
                     'link' => $salon['pinterest_link'],
                     'icon' => option('pinterest_icon')
@@ -266,39 +258,39 @@ class SalonCardModel extends PurpleModel
 
             $variables['phones'] = [];
             $variables['additional_phones'] = [];
-            if ($salon['contact_phone'] !== '' and $salon['contact_phone'] !== null) {
+            if($salon['contact_phone'] !== '' and $salon['contact_phone'] !== null) {
                 $variables['phones'][] = [
                     'full_phone' => $salon['contact_phone'],
-                    'first_number' => '+' . mb_substr($salon['contact_phone'], 0, 1),
+                    'first_number' => '+'.mb_substr($salon['contact_phone'], 0, 1),
                     'additional_numbers' => mb_substr($salon['contact_phone'], 1)
                 ];
             }
-            if ($salon['contact_phone_2'] !== '' and $salon['contact_phone_2'] !== null) {
+            if($salon['contact_phone_2'] !== '' and $salon['contact_phone_2'] !== null) {
                 $variables['phones'][] = [
                     'full_phone' => $salon['contact_phone_2'],
-                    'first_number' => '+' . mb_substr($salon['contact_phone_2'], 0, 1),
+                    'first_number' => '+'.mb_substr($salon['contact_phone_2'], 0, 1),
                     'additional_numbers' => mb_substr($salon['contact_phone_2'], 1)
                 ];
             }
-            if ($salon['contact_phone_3'] !== '' and $salon['contact_phone_3'] !== null) {
+            if($salon['contact_phone_3'] !== '' and $salon['contact_phone_3'] !== null) {
                 $variables['additional_phones'][] = [
                     'full_phone' => $salon['contact_phone_3'],
-                    'first_number' => '+' . mb_substr($salon['contact_phone_3'], 0, 1),
+                    'first_number' => '+'.mb_substr($salon['contact_phone_3'], 0, 1),
                     'additional_numbers' => mb_substr($salon['contact_phone_3'], 1)
                 ];
             }
-            if ($salon['contact_phone_4'] !== '' and $salon['contact_phone_4'] !== null) {
+            if($salon['contact_phone_4'] !== '' and $salon['contact_phone_4'] !== null) {
                 $variables['additional_phones'][] = [
                     'full_phone' => $salon['contact_phone_4'],
-                    'first_number' => '+' . mb_substr($salon['contact_phone_4'], 0, 1),
+                    'first_number' => '+'.mb_substr($salon['contact_phone_4'], 0, 1),
                     'additional_numbers' => mb_substr($salon['contact_phone_4'], 1)
                 ];
             }
 
             $variables['relative_salons'] = [];
             $servicesQueryList = [];
-            foreach ($variables['all_services'] as $serviceId => $serviceItem) {
-                $servicesQueryList[] = '`user_service`.`service_id` = ' . $serviceId . " AND `user`.`user_id` != $salon_id";
+            foreach($variables['all_services'] as $serviceId => $serviceItem) {
+                $servicesQueryList[] = '`user_service`.`service_id` = '.$serviceId." AND `user`.`user_id` != $salon_id";
             }
             $servicesQuery = implode(' OR ', $servicesQueryList);
 
@@ -308,15 +300,14 @@ class SalonCardModel extends PurpleModel
                 ON `user`.`user_id` = `user_service`.`user_id`
                 WHERE $servicesQuery
                 LIMIT 4 OFFSET 0
-            "
-            );
+            ");
 
-            if (!empty($relativeSalons)) {
-                foreach ($relativeSalons as $relativeSalon) {
+            if(!empty($relativeSalons)) {
+                foreach($relativeSalons as $relativeSalon) {
                     $variables['relative_salons'][] = new SalonCardModel($relativeSalon, 'components/master_card_landing');
                 }
             }
-            $variables['review_topup'] = new TopupModel(new ReviewFormModel($variables['name'], 'leave_a_review_about_the_' . $variables['type'], 'describe_your_experience_at_the_' . $variables['type'], false), 'review-button-js');
+            $variables['review_topup'] = new TopupModel(new ReviewFormModel($variables['name'], 'leave_a_review_about_the_'.$variables['type'], 'describe_your_experience_at_the_'.$variables['type'], false), 'review-button-js');
         }
         $this->data = $variables;
 

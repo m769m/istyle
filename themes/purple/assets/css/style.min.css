@@ -2952,17 +2952,11 @@ body {
 }
 
 .profile-form {
-    max-width: 660px;
+    width: 660px;
 }
 
 .profile-form-item {
     width: 200px;
-}
-
-@media (max-width: 459px) {
-    .profile-form-item {
-        width: 100%;
-    }
 }
 
 .profile-form-item label {
@@ -3087,8 +3081,11 @@ body {
 
 .topup-content-container {
     max-height: 95vh;
+    /* max-width: 95vw; */
+    /* width: max-content; */
     min-width: 320px;
-    max-width: 890px;
+    max-width: 560px;
+    width: 100%;
     overflow: auto;
     background: #FFFFFF;
     box-shadow: 0 0 5px #939393;

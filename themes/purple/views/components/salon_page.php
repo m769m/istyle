@@ -137,20 +137,14 @@
 
 <div class="filter-recommendation salone-profile-filter">
     <span class="order-by-text"><?= t('order_by') ?>:</span>
-    <div class="recommendation-list">
-        <a href='?order=recommended' class="sort-item active-sort-item"><?= t('by_recomended') ?></a>
-        <a href='?order=rating' class="sort-item"><?= t('by_rating') ?></a>
-        <a href='?order=price' class="sort-item"><?= t('by_price') ?></a>
-        <a href='?order=discount' class="sort-item"><?= t('by_discount') ?></a>
-        <a href='?order=duration' class="sort-item"><?= t('by_time') ?></a>
-
-        <div data-click='0' data-outer-hide='0' data-rotate='.arrow-icon' data-hidden='hidden-recommendation' data-content='#hidden_recommendation' class='display-recommendation-button pointer hover dropbox-toogle'>
-            <img class="arrow-icon" src='/themes/purple/assets/images/arrow-down.svg'>
-        </div>
-        <div id='hidden_recommendation' class="hidden-recommendation flex flex-start flex-wrap gap-10 mb10"></div>
+    <div data-active-class='active-sort-item' class="recommendation-list change-list-js">
+        <a data-name="sort" data-query="user_service_rating" class="sort-item active-sort-item button-filter-js change-list-item-js"><?= t('by_rating') ?></a>
+        <a data-name="sort" data-query="price" class="sort-item button-filter-js change-list-item-js"><?= t('by_price') ?></a>
+        <a data-name="sort" data-query="discount" class="sort-item button-filter-js change-list-item-js"><?= t('by_discount') ?></a>
+        <a data-name="sort" data-query="duration" class="sort-item button-filter-js change-list-item-js"><?= t('by_time') ?></a>
     </div>
 </div>
-<div class="catalog-page-service-cards">
+<div class="catalog-page-service-cards" id="filters_content_js">
     <?php if (!empty($salon_services)) {
         foreach ($salon_services as $salon_service) {
             echo $salon_service;
@@ -173,39 +167,19 @@
 <?php } ?>
 
 <!-- <div class="salon-page-bg"></div> -->
-<div class="salon-reviews slider-reviews" id='reviews'>
-    <div class="salon-page-rating">
-        <p class="salon-page-rating-title-mini">Отзывы об услуге</p>
-        <?= getStars($rating) ?>
-        <?php if ($reviews_count > 0) { ?>
-            <a class="count-reviews" href='#reviews'>(<?= $reviews_count ?> <?= t('reviews') ?>)</a>
-        <?php } else { ?>
-            <span class="count-reviews">(<?= t('no_reviews') ?>)</span>
-        <?php } ?>
+<div class="salon-reviews" id='reviews'>
+    <div class="mb15 flex flex-start gap-20">
+        <div class="h3 bold nunito"><?= t('salon_reviews') ?></div>
+        <a class="button primary-transparent-button bold padding15 icon-button review-button-js"><?= t('add_review') ?><img src="/themes/purple/assets/images/feather.svg"></a>
     </div>
-
-    <div class="reviews-header">
-        <?php if ($reviews_count > 0) { ?>
-            <a href='#reviews'><?= $reviews_count ?> <?= t('reviews') ?></a>
-        <?php } else { ?>
-            <span><?= t('no_reviews') ?></span>
-        <?php } ?>
-
-        <div class="reviews-add">
-            <a class="button primary-transparent-button bold padding15 icon-button review-button-js"><?= t('add_review') ?><img src="/themes/purple/assets/images/feather.svg"></a>
-        </div>
-    </div>
-
-    <div class="reviews-list slider-reviews-list">
-        <div class="slider-reviews-track">
-            <?php if (!empty($reviews)) {
-                foreach ($reviews as $review) {
-                    echo $review;
-                }
-            } else {
-                echo '</div><p class="catalog-no-results">' . t('no_reviews') . '</p>';
-            } ?>
-        </div>
+    <div class="">
+        <?php if (!empty($reviews)) {
+            foreach ($reviews as $review) {
+                echo $review;
+            }
+        } else {
+            echo '</div><p class="catalog-no-results">' . t('no_reviews') . '</p>';
+        } ?>
     </div>
 </div>
 <div class="relative-salons">
@@ -213,9 +187,9 @@
         <div class="h3 bold nunito gray-text"><?= t('relative_salons_and_masters') ?></div>
         <?php if (!empty($relative_salons) and count($relative_salons) > 4) { ?>
             <!-- <div>
-                <div class="works-button left slide-button slide-left"><i class="fa-solid fa-chevron-left"></i></div>
-                <div class="works-button right slide-button slide-right"><i class="fa-solid fa-chevron-right"></i></div>
-            </div> -->
+            <div class="works-button left slide-button slide-left"><i class="fa-solid fa-chevron-left"></i></div>
+            <div class="works-button right slide-button slide-right"><i class="fa-solid fa-chevron-right"></i></div>
+        </div> -->
         <?php } ?>
     </div>
     <div class="space10"></div>
@@ -231,4 +205,9 @@
 </div>
 <div class="space30"></div>
 <?= $review_topup ?>
+<script src="/assets/js/filters.js"></script>
+<form action="" method="post" class="filters-form-js">
+    <input type="hidden" name="filter" value="1">
+    <input type="hidden" name="sort">
+</form>
 <!-- salon_page -->
