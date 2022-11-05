@@ -1,0 +1,7 @@
+@media (max-width: 1024px) {
+  .profile-form.profile-form_mb {
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+  }
+}

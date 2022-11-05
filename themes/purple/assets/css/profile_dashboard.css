@@ -1,0 +1,26 @@
+.search-date {
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 14px;
+  color: #C75B7B;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.profile-wrap-header {
+  display: flex;
+  gap: 22px;
+}
+
+.profile-catalog-filters-service {
+  flex-direction: column;
+}
+
+.my-service-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+

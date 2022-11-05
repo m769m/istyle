@@ -1,0 +1,41 @@
+.show-review {
+  max-width: 621px;
+}
+
+.show-review {
+  box-sizing: content-box;
+}
+
+.show-review .review-item {
+  width: 621px !important;
+}
+
+.show-review .review-photo {
+  max-height: 262px;
+}
+
+.show-review .close-service-dropbox {
+  width: auto;
+  margin-top: 0;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 680px) {
+  .show-review .review-item {
+    width: 320px !important;
+    margin-bottom: 0;
+  }
+
+  .show-review .review-item {
+    padding-top: 30px;
+  }
+
+  .show-review .close-service-dropbox {
+    top: auto;
+    transform: translate(-50%, -45px);
+  }
+}

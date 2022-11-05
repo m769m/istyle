@@ -1,0 +1,792 @@
+.service-registration {
+  padding: 36px 41px;
+  max-width: 890px;
+}
+
+.service-registration-title {
+  font-family: 'Raleway';
+  font-weight: 700;
+  font-size: 32px;
+  color: #383838;
+  margin-bottom: 38px;
+  align-items: flex-start;
+  display: flex;
+}
+
+.service-registration-title a {
+  width: 23px;
+  margin-top: 13px;
+}
+
+.service-registration-title a img:first-child {
+  width: 12px;
+}
+
+.service-registration-title a img:last-child {
+  display: none;
+  width: 40px;
+}
+
+#calendar2 tbody tr {
+  height: 26px;
+}
+
+.prepayment-warning {
+  display: flex;
+  font-family: 'Nunito';
+  font-weight: 600;
+  font-size: 14px;
+  color: #383838;
+  gap: 13px;
+  margin-bottom: 20px;
+}
+
+#calendar2 thead td:nth-child(2) {
+  background-color: red;
+}
+
+
+
+.service-registration-date {
+  display: flex;
+  gap: 26px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.layout-calendar {
+  padding: 21px 29px;
+  border: 1px solid #EAC4CF;
+  border-radius: 6px;
+}
+
+.date-day {
+  font-family: 'Nunito';
+  font-weight: 400;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  color: #383838;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #C75B7B;
+  border-radius: 4px;
+}
+
+.service-registration-title-block {
+  font-family: 'Nunito';
+  font-weight: 500;
+  font-size: 14px;
+  color: #383838;
+  margin-bottom: 11px;
+}
+
+
+
+
+.calendar-title-mounth {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 24px;
+  background: #F3F3F3;
+  border-radius: 6px;
+  margin-bottom: 17px;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 26px);
+  text-align: center;
+  gap: 13.5px;
+}
+
+.week-calendar-days {
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 18px;
+  color: #9E9E9E;
+  display: grid;
+  grid-template-columns: repeat(7, 26px);
+  grid-gap: 13.5px;
+  text-align: center;
+  margin-bottom: 14.5px;
+}
+
+.calendar-days .form_radio_btn input[type=radio]:disabled + label {
+  box-sizing: border-box;
+  border: none;
+  font-weight: 400;
+  height: 26px;
+  width: 26px;
+  color: #E5E5E5;
+  background: none;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-days .form_radio_btn input[type=radio] + label {
+  box-sizing: border-box;
+  font-family: 'Nunito';
+  font-weight: 400;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  color: #383838;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #C75B7B;
+  border-radius: 4px;
+  height: 26px;
+} 
+
+.calendar-title-mounth td:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.calendar-title-mounth td:first-child img {
+  margin-left: auto;
+}
+
+.calendar-title-mounth td:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.service-registration #calendar2 {
+  width: 100%;
+  text-align: center;
+  max-width: 332px;
+  height: 100%;
+}
+#calendar2 thead tr:last-child {
+  height: 45px;
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 18px;
+  color: #9E9E9E;
+}
+#calendar2 thead tr:nth-child(1) td:nth-child(2) {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 27px;
+  color: #383838;
+}
+#calendar2 thead tr:nth-child(1) td:nth-child(1):hover, #calendar2 thead tr:nth-child(1) td:nth-child(3):hover {
+  cursor: pointer;
+}
+#calendar2 tbody td {
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+  color: #E5E5E5;
+}
+#calendar2 tbody td.today {
+  background: rgb(220, 0, 0);
+  color: #fff;
+}
+
+
+
+.service-registration-day-interval {
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
+}
+
+.service-registration-time {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.time-morning,
+.time-day {
+  display: grid;
+  grid-template-columns: repeat(2, 82px);
+  grid-gap: 10px;
+}
+
+.time-evening {
+  display: grid;
+  grid-template-columns: repeat(5, 82px);
+  grid-gap: 10px;
+}
+
+
+
+.time-morning-title,
+.time-day-title,
+.time-evening-title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.time-morning-title img, .time-day-title img, .time-evening-title img {
+  margin-right: 6px;
+}
+table {border-collapse: collapse;}
+
+.form_radio_btn {
+	display: inline-block;
+}
+.form_radio_btn input[type=radio] {
+	display: none;
+}
+.form_radio_btn label {
+	display: inline-block;
+	cursor: pointer;
+	line-height: 34px;
+	border: 1px solid #C75B7B;
+	border-radius: 6px;
+	user-select: none;
+  width: 100%;
+  text-align: center;
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 14px;
+  color: #383838;
+}
+ 
+/* Checked */
+.form_radio_btn input[type=radio]:checked + label {
+	background: #C75B7B;
+  border: 1px solid #C75B7B;
+  color: white;
+}
+ 
+/* Hover */
+.form_radio_btn label:hover {
+	opacity: 0.8;
+}
+ 
+/* Disabled */
+.form_radio_btn input[type=radio]:disabled + label {
+	background: #efefef;
+	color: #666;
+  border: none;
+}
+
+.service-registration-master .select-input{
+  max-width: 332px;
+  width: 100%;
+  padding: 20px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.additional-service-strong {
+  font-weight: 700px;
+}
+
+.additional-service-title {
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  gap: 15px;
+  min-height: 50px;
+  padding: 10px 17px;
+  cursor: pointer;
+  box-sizing: content-box;
+}
+
+.additional-service-item {
+  border: 1px solid #EAC4CF;
+  border-radius: 6px;
+}
+
+.additional-service-content.hidden-menu .more-additional-services {
+  display: none;
+}
+
+.additional-service-content .more-additional-services {
+  display: block;
+}
+
+.additional-service-pre-title  {
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  cursor: pointer;
+  box-sizing: content-box;
+  flex-direction: column;
+  max-width: 332px;
+  background: #F3F3F3;
+  border-radius: 6px;
+  height: 62px;
+  justify-content: center;
+}
+
+.additional-service-dropbox-title .faq-arrow-icon {
+  position: absolute;
+  right: 17px;
+}
+
+.additional-service-dropbox-title {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0px 17px;
+}
+
+.additional-service-pre-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0 17px 17px 17px;
+  max-width: 332px;
+  width: 100%;
+}
+
+.additional-service-pre-item .additional-menu-box {
+  opacity: 1;
+  transition: opacity 0.4s, max-height 0.4s, visibility 0.5s, margin 0.4s;
+  border-bottom: 1px solid #EDEDED;
+}
+
+.additional-service-pre-item .hidden-menu {
+  opacity: 0;
+  visibility: hidden;
+  max-height: 0px;
+  border-radius: 6px;
+}
+
+.additional-service-pre-content {
+  font-size: 16px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  max-width: 332px;
+  align-content: center;
+  gap: 10px;
+}
+
+.additional-service-item .additional-menu-box {
+  opacity: 1;
+  transition: opacity 0.4s, max-height 0.4s, visibility 0.5s, margin 0.4s;
+  border-bottom: none;
+  margin-bottom: 10px;
+}
+
+.additional-service-item .hidden-menu {
+  opacity: 0;
+  visibility: hidden;
+  max-height: 0px;
+  border-radius: 6px;
+  margin: 0;
+}
+
+.additional-service-content {
+  display: flex;
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  flex-direction: column;
+}
+
+.additional-service-window {
+  display: flex;
+  justify-content: space-between;
+}
+
+.additional-service-item .service-registration-cost{
+  align-items: flex-start;
+  gap: 32px;
+  margin-right: 17px;
+}
+
+.additional-service {
+  margin-bottom: 40px;
+}
+
+.additional-service .select-input {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  border: 1px solid #EAC4CF;
+  background-color: white;
+}
+
+/* .service-registration-data {
+
+} */
+
+.service-registration-cost {
+  display: flex;
+  align-items: center;
+}
+
+.service-registration-master {
+  display: flex;
+  justify-content: space-between;
+  gap: 27px;
+}
+
+.service-registration-master .service-registration-left {
+  width: 40%;
+}
+
+.service-registration-rigth {
+  max-width: 452px;
+  width: 100%;
+  height: auto;
+}
+
+.service-registration .primary-button {
+  width: 100%;
+  padding: 20px;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.service-registration-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 14px;
+  color: #383838;
+}
+
+.more-additional-services {
+  font-family: 'Nunito';
+  font-weight: 400;
+  font-size: 16px;
+  color: #BDA786;
+  margin-bottom: 14px;
+  margin-left: 18px;
+}
+
+.service-registration-bottom div::before {
+  content: '';
+  border-radius: 100%;
+  width: 5px;
+  height: 5px;
+  background: #C75B7B;
+  display: block;
+  position: absolute;
+  left: -15px;
+  top: 40%;
+}
+
+.service-registration-day-interval .select-input.big-input,
+.registration-time-evening .select-input.big-input {
+    display: none;
+}
+
+.time-item .time-title {
+  display: none;
+}
+
+@media (max-width: 888px) {
+  .time-morning,
+  .time-day,
+  .time-evening,
+  .time-morning-title,
+  .time-day-title,
+  .time-evening-title {
+    display: none;
+  }
+
+  .service-registration-title a img:first-child {
+    display: none;
+  }
+
+  .service-registration-title a img:last-child {
+    display: block;
+  }
+
+  .service-registration-title a {
+    width: auto;
+    margin-top: 0;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+  }
+
+  .additional-service-item .service-registration-cost {
+    gap: 32px;
+    margin-left: 17px;
+    margin-bottom: 10px;
+  }
+
+  /* .additional-service-item .service-registration-cost .service-page-price {
+    margin-left: 17px;
+  } */
+
+  .more-additional-services {
+    margin: 0;
+  }
+
+  .more-additional-block {
+    display: flex;
+    margin-left: 17px;
+    justify-content: flex-start;
+  }
+
+  .service-registration-day-interval {
+    flex-direction: column;
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+
+  /* .service-registration-date .service-registration-rigth {
+    gap: 10px;
+  }  */
+
+  .service-registration-date .service-registration-left {
+    width: 100%;
+  }
+
+  .calendar-days {
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+  }
+
+  .week-calendar-days {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .service-registration-date .layout-calendar .form_radio_btn,
+  .calendar-days .form_radio_btn input[type=radio] + label {
+    width: 100%
+  }
+  
+  .service-registration-day-interval .select-input.big-input {
+    display: block;
+    width: 100%;
+  }
+  
+  .service-registration-date .service-registration-rigth {
+    max-width: none;
+  }
+
+  .service-registration-master {
+    flex-direction: column;
+  }
+
+  .service-registration-master .service-registration-left {
+    width: 100%;
+  }
+  
+  .service-registration-master .select-input {
+    max-width: none;
+  }
+
+  .service-registration-master .service-registration-rigth {
+    max-width: none;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .service-registration-master .service-page-time div:last-child {
+    justify-content: center;
+  }
+
+  .prepayment-warning {
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    gap: 4px;
+    flex-direction: column;
+  }
+
+  .prepayment-warning img {
+    width: 20px;
+  }
+
+  .service-registration-bottom {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .service-registration-title {
+    text-align: center;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .time-item .time-title {
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    gap: 15px;
+    min-height: 50px;
+    padding: 10px 17px;
+    cursor: pointer;
+    box-sizing: content-box;
+    background: #F3F3F3;
+    justify-content: center;
+    background: #FFFFFF;
+    border: 1px solid #CDCDCD;
+    border-radius: 6px;
+    font-family: 'Nunito';
+    font-weight: 700;
+    font-size: 16px;
+    color: #CDCDCD;
+  }
+
+  .time-item .time-title:hover {
+    opacity: 0.9;
+  }
+
+  .time-content {
+    border-radius: 6px;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+  }
+
+  .time-title .faq-arrow-icon {
+    position: absolute;
+    right: 20px;
+    margin-left: auto;
+  }
+
+  .time-item .hidden-menu {
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0px;
+    border-radius: 6px;
+  }
+
+  .time-item .additional-menu-box {
+    transition: opacity 0.4s, max-height 0.4s, visibility 0.5s, margin 0.4s;
+    border-bottom: 1px solid #EDEDED;
+    margin: 0;
+  }
+}
+
+@media (max-width: 652px) {
+  .additional-service-window {
+    flex-direction: column;
+  }
+
+  .additional-service-pre-title {
+    max-width: none;
+    width: auto;
+  }
+
+  .additional-service-pre-content {
+    max-width: 100%;
+    margin-right: 17px;
+  }
+}
+
+@media (max-width: 429px) {
+  .additional-service-item .service-registration-cost .service-page-price,
+  .additional-service-item .service-registration-cost .service-page-time  {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .additional-service-item .service-registration-cost {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .additional-service-item .service-registration-cost {
+    gap: 15px;
+    justify-content: center;
+    margin-left: none;
+  }
+
+  .more-additional-block {
+    display: flex;
+    justify-content: center;
+    margin-left: none;
+  }
+}
+
+.service-registration-completed {
+  width: 380px;
+  padding: 27px 32px;
+}
+
+.registration-completed-title {
+  font-family: 'Raleway';
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+  color: #383838;
+  margin-bottom: 32px;
+}
+
+.completed-information-title {
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 16px;
+  color: #9E9E9E;
+}
+
+.completed-information-text {
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 18px;
+  color: #383838;
+}
+
+.completed-information-route {
+  font-family: 'Nunito';
+  font-weight: 600;
+  font-size: 16px;
+  color: #99805B;
+}
+
+.registration-completed-information {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.completed-information-route-block {
+  margin-bottom: 34px;
+}
+
+.registration-completed {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 100%;
+  text-align: center;
+  color: #6CBF82;
+  border: 1px solid #6CBF82;
+  border-radius: 6px;
+  padding: 17px 20px;
+}
+
+.registration-completed img:first-child {
+  position: absolute;
+  left: -8px;
+  top: 35%;
+}
+
+.registration-completed img:last-child {
+  position: absolute;
+  right: -8px;
+  top: 35%;
+}
+
+.registration-completed {
+  margin-bottom: 34px;
+}
+
+.hidden-completed {
+  display: none;
+}

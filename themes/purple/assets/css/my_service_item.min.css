@@ -1,0 +1,205 @@
+.my-service-item {
+  height: 228px;
+  padding: 27px;
+  background: #FFFFFF;
+  border-radius: 6px;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-areas:
+    "head info"
+    "btn  info";
+}
+
+
+
+.my-service-item-active {
+  border: 1px solid #E3E3E3;
+}
+
+.my-service-item-completed {
+  border: 1px solid #6CBF82;
+}
+
+.my-service-item-delete {
+  border: 1px solid #FA948B;
+}
+
+.my-service-item-title:nth-child(1) {
+  grid-area: head;
+  font-family: 'Raleway';
+  font-weight: 600;
+  font-size: 24px;
+  color: #383838;
+}
+
+.my-service-item-title .salon-page-header-info {
+  gap: 0;
+  flex-wrap: wrap;
+  text-align: inherit;
+}
+
+.my-service-item-title .salon-page-header-info .salon-adress {
+  margin-right: 24px;
+}
+
+.my-service-item-information-block-title {
+  font-family: 'Nunito';
+  font-weight: 600;
+  font-size: 14px;
+  color: #9E9E9E;
+  margin-bottom: 6px;
+}
+
+.my-service-item-information-block {
+
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 16px;
+  color: #383838;
+}
+
+.my-service-item-information-block {
+  max-width: 145px;
+  min-width: 48px;
+  line-height: 27px;
+}
+
+.my-service-item-information-block-text {
+  display: flex;
+  gap: 9px;
+  white-space: nowrap;
+}
+
+.my-service-item-information-block-text img {
+  width: 12px;
+}
+
+.my-service-item-information {
+  display: grid;
+  grid-area: info;
+  grid-template-columns: repeat(2, 145px);
+  grid-gap: 20px;
+}
+
+.my-service-item-information-block .cost-sales {
+  color: var(--brown-color);
+  font-weight: 600;
+  font-size: 20px;
+  color: #99805B;
+}
+
+.my-service-item-action {
+  grid-area: btn;
+  display: flex;
+  align-items: flex-end;
+}
+
+.my-service-item-action .big-button {
+  border: 1px solid #C75B7B;
+  border-radius: 6px;
+  font-family: 'Nunito';
+  font-weight: 500;
+  font-size: 16px;
+  color: #C75B7B;
+}
+
+.my-service-item-action-text {
+  font-family: 'Nunito';
+  font-weight: 400;
+  font-size: 16px;
+  color: #BDA786;
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  padding: 16px 16px;
+  height: 40px;
+}
+
+.my-service-item-action-completed {
+  color: #6CBF82;
+}
+
+.my-service-item-action-active {
+  color: #BDA786;
+}
+
+.my-service-item-action-delete {
+  color: #FA948B;
+}
+
+@media (max-width: 860px) {
+  .my-service-item {
+    height: auto;
+    grid-template-areas:
+      "head"
+      "info"
+      "btn";
+  }
+
+  .my-service-item-information-block {
+    max-width: none;
+    min-width: 48px;
+  }
+
+  .my-service-item-information {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .my-service-item .service-info-button {
+    height: 42px;
+  }
+
+  .my-service-item-title .salon-page-header-info .salon-adress {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 770px) {
+  .search-date {
+    display: none;
+  }
+}
+
+@media (max-width: 550px) {
+  .my-service-item-information {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .my-service-item-information-block {
+    display: flex;
+    align-items: center;
+    background-color: #F4F4F4;
+    border-radius: 6px;
+    padding: 14px 18px;
+  }
+
+  .my-service-item-information-block-title {
+    margin-bottom: 0;
+  }
+
+  .my-service-item-action {
+    flex-direction: column;
+  }
+
+  .my-service-item-action a,
+  .my-service-item-action button {
+    width: 100%;
+  }
+
+  .my-service-item-action a {
+    margin-bottom: 20px;
+  }
+
+  .my-service-item-action button {
+    display: flex;
+    justify-content: center;
+  }
+
+  .my-service-item-title .salon-page-header-info .salon-adress {
+    background: #F7F7F7;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-top: 20px;
+  }
+
+}
